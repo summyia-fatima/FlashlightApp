@@ -4,10 +4,11 @@ import { View, StyleSheet, Text } from 'react-native';
 import mobileAds, {
   BannerAd,
   BannerAdSize,
-  TestIds,
 } from 'react-native-google-mobile-ads';
 
 import { COLORS } from '../theme';
+
+const BANNER_AD_UNIT_ID = 'ca-app-pub-2192277706609111/8857560924';
 
 const AdBanner = () => {
   const [isReady, setIsReady] = useState(false);
@@ -18,9 +19,7 @@ const AdBanner = () => {
     mobileAds()
       .initialize()
       .then(() => {
-        if (mounted) {
-          setIsReady(true);
-        }
+        if (mounted) setIsReady(true);
       })
       .catch(error => {
         console.log('AdMob initialization error:', error);
@@ -37,7 +36,7 @@ const AdBanner = () => {
 
       {isReady && (
         <BannerAd
-          unitId={TestIds.BANNER}
+          unitId={BANNER_AD_UNIT_ID}
           size={BannerAdSize.BANNER}
           onAdLoaded={() => console.log('Banner loaded')}
           onAdFailedToLoad={error => console.log('Banner failed:', error)}
@@ -60,7 +59,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     overflow: 'hidden',
   },
-
   adLabel: {
     color: COLORS.mutedDark,
     fontSize: 9,

@@ -1,9 +1,8 @@
 {
   "name": "FlashlightApp",
-  "displayName": "FlashlightApp"
-  ,
+  "displayName": "FlashlightApp",
+  
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-3940256099942544~3347511713"
+    "android_app_id": "ca-app-pub-2192277706609111~4559223262"
   }
-
 }
