@@ -1,13 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
+// actual ad unit ID import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+
 import mobileAds, {
   BannerAd,
   BannerAdSize,
 } from 'react-native-google-mobile-ads';
 
+// test ad unit ID import { TestIds } from 'react-native-google-mobile-ads';
+
+// import mobileAds, {
+//   BannerAd,
+//   BannerAdSize,
+//   TestIds,
+// } from 'react-native-google-mobile-ads';
+
 import { COLORS } from '../theme';
 
+// actual ad unit ID
+
 const BANNER_AD_UNIT_ID = 'ca-app-pub-2192277706609111/8857560924';
+
+// test ad unit ID
+
+// const BANNER_AD_UNIT_ID = __DEV__
+//   ? TestIds.BANNER
+//   : 'ca-app-pub-2192277706609111/8857560924';
 
 const AdBanner: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
