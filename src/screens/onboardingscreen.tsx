@@ -1,27 +1,26 @@
 import React, { useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   FlatList,
-  useWindowDimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from 'react-native';
-import PrivacyPolicyLink from '../components/PrivacyPolicyLink';
-
 import {
   Power,
-  Zap,
-  SlidersHorizontal,
-  Volume2,
-  Vibrate,
   Share2,
   Siren,
+  SlidersHorizontal,
   Sun,
+  Vibrate,
+  Volume2,
+  Zap,
 } from 'lucide-react-native';
 
+import PrivacyPolicyLink from '../components/PrivacyPolicyLink';
 import { COLORS, SPACING } from '../theme';
 
 type Props = {
@@ -68,68 +67,47 @@ const pages = [
 
 const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
   const { width } = useWindowDimensions();
-
   const listRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [thirdUnlocked, setThirdUnlocked] = useState(false);
   const adRunning = useRef(false);
 
   const goToPage = (index: number) => {
-    listRef.current?.scrollToOffset({
-      offset: width * index,
-      animated: true,
-    });
+    listRef.current?.scrollToOffset({ offset: width * index, animated: true });
   };
 
   const unlockThird = () => {
-    if (thirdUnlocked || adRunning.current) {
-      return;
-    }
+    if (thirdUnlocked || adRunning.current) return;
 
     adRunning.current = true;
-
-    listRef.current?.scrollToOffset({
-      offset: width,
-      animated: false,
-    });
-
+    listRef.current?.scrollToOffset({ offset: width, animated: false });
     setCurrentIndex(1);
 
     showAdBeforeThird(() => {
       setThirdUnlocked(true);
       adRunning.current = false;
       setCurrentIndex(2);
-
-      requestAnimationFrame(() => {
-        goToPage(2);
-      });
+      requestAnimationFrame(() => goToPage(2));
     });
   };
 
   const onScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
-
     if (index === 2 && !thirdUnlocked) {
       unlockThird();
       return;
     }
-
     setCurrentIndex(index);
   };
 
   const handleNext = () => {
-    if (currentIndex === 0) {
-      goToPage(1);
-    } else if (currentIndex === 1) {
-      unlockThird();
-    } else {
-      onFinish();
-    }
+    if (currentIndex === 0) goToPage(1);
+    else if (currentIndex === 1) unlockThird();
+    else onFinish();
   };
 
   const renderPage = ({ item }: { item: (typeof pages)[number] }) => {
     const MainIcon = item.icon;
-
     return (
       <View style={[styles.page, { width }]}>
         <View style={styles.pageContent}>
@@ -139,27 +117,22 @@ const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
                 <MainIcon size={65} color={COLORS.yellow} strokeWidth={1.7} />
               </View>
             </View>
-
             <View style={styles.glowDot} />
             <View style={styles.glowDotTwo} />
           </View>
 
           <Text style={styles.title}>{item.title}</Text>
-
           <Text style={styles.description}>{item.description}</Text>
 
           <View style={styles.featureList}>
             {item.features.map((feature, index) => {
               const FeatureIcon = feature.icon;
-
               return (
                 <View key={index} style={styles.featureItem}>
                   <View style={styles.featureIcon}>
                     <FeatureIcon size={19} color={COLORS.yellow} />
                   </View>
-
                   <Text style={styles.featureText}>{feature.text}</Text>
-              
                 </View>
               );
             })}
@@ -175,7 +148,6 @@ const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
         <View style={styles.brandIcon}>
           <Power size={20} color={COLORS.yellow} />
         </View>
-
         <Text style={styles.brandName}>LUMEN</Text>
       </View>
 
@@ -208,7 +180,6 @@ const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
             />
           ))}
         </View>
-
         <View style={styles.bottomArea}>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -219,7 +190,6 @@ const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
               {currentIndex === 2 ? 'Get Started' : 'Continue'}
             </Text>
           </TouchableOpacity>
-
           <Text style={styles.bottomText}>
             {currentIndex === 2
               ? 'Your light, your way.'
@@ -240,14 +210,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     overflow: 'hidden',
   },
-
   header: {
     height: 55,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   brandIcon: {
     width: 35,
     height: 35,
@@ -257,27 +225,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 9,
   },
-
   brandName: {
     color: COLORS.text,
     fontSize: 20,
     fontWeight: '900',
     letterSpacing: 3,
   },
-
   page: {
     flex: 1,
     paddingHorizontal: SPACING.screen,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  pageContent: {
-    width: '100%',
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-
+  pageContent: { width: '100%', alignItems: 'center', paddingVertical: 8 },
   illustrationArea: {
     width: '100%',
     height: 165,
@@ -285,7 +245,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 14,
   },
-
   outerCircle: {
     width: 150,
     height: 150,
@@ -296,7 +255,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#51431B',
   },
-
   innerCircle: {
     width: 112,
     height: 112,
@@ -307,7 +265,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: COLORS.yellow,
   },
-
   glowDot: {
     position: 'absolute',
     top: 8,
@@ -317,7 +274,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.yellow,
   },
-
   glowDotTwo: {
     position: 'absolute',
     bottom: 12,
@@ -327,7 +283,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.yellow,
   },
-
   title: {
     color: COLORS.text,
     fontSize: 24,
@@ -335,7 +290,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 9,
   },
-
   description: {
     color: COLORS.muted,
     fontSize: 13,
@@ -344,12 +298,7 @@ const styles = StyleSheet.create({
     maxWidth: 310,
     marginBottom: 17,
   },
-
-  featureList: {
-    width: '100%',
-    gap: 10,
-  },
-
+  featureList: { width: '100%', gap: 10 },
   featureItem: {
     minHeight: 60,
     flexDirection: 'row',
@@ -361,7 +310,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.secondaryCard,
   },
-
   featureIcon: {
     width: 38,
     height: 38,
@@ -371,18 +319,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 12,
   },
-
-  featureText: {
-    color: COLORS.text,
-    fontSize: 13,
-    fontWeight: '600',
-    flex: 1,
-  },
-
-  footer: {
-    paddingBottom: 8,
-  },
-
+  featureText: { color: COLORS.text, fontSize: 13, fontWeight: '600', flex: 1 },
+  footer: { paddingBottom: 8 },
   dotsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -390,24 +328,14 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 10,
   },
-
   dot: {
     width: 8,
     height: 8,
     borderRadius: 10,
     backgroundColor: COLORS.secondaryCard,
   },
-
-  activeDot: {
-    width: 25,
-    backgroundColor: COLORS.yellow,
-  },
-
-  bottomArea: {
-    paddingHorizontal: SPACING.screen,
-    paddingBottom: 5,
-  },
-
+  activeDot: { width: 25, backgroundColor: COLORS.yellow },
+  bottomArea: { paddingHorizontal: SPACING.screen, paddingBottom: 5 },
   nextButton: {
     height: 52,
     borderRadius: 16,
@@ -415,13 +343,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  nextButtonText: {
-    color: COLORS.background,
-    fontSize: 15,
-    fontWeight: '800',
-  },
-
+  nextButtonText: { color: COLORS.background, fontSize: 15, fontWeight: '800' },
   bottomText: {
     color: COLORS.mutedDark,
     textAlign: 'center',

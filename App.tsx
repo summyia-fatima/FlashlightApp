@@ -1,33 +1,26 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-
-import { View, StyleSheet, StatusBar } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import mobileAds, {
-  InterstitialAd,
   AdEventType,
+  InterstitialAd,
 } from 'react-native-google-mobile-ads';
 
 import AppHeader from './src/components/appheader';
 import BottomNavigation, { TabName } from './src/components/bottomnavigation';
-
-import TorchScreen from './src/screens/torchscreen';
-import SettingsScreen from './src/screens/settingscreen';
 import AboutScreen from './src/screens/aboutscreen';
 import OnboardingScreen from './src/screens/onboardingscreen';
-
+import SettingsScreen from './src/screens/settingscreen';
+import TorchScreen from './src/screens/torchscreen';
 import { COLORS } from './src/theme';
 
 const INTERSTITIAL_AD_UNIT_ID = 'ca-app-pub-2192277706609111/6231397582';
-
 const interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL_AD_UNIT_ID);
 
 const App = () => {
   const [activeTab, setActiveTab] = useState<TabName>('Torch');
-
   const [sound, setSound] = useState(true);
   const [haptics, setHaptics] = useState(true);
-
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   const adLoadedRef = useRef(false);
@@ -35,11 +28,8 @@ const App = () => {
 
   const finishAdFlow = useCallback(() => {
     const callback = pendingAdCallback.current;
-
-    if (callback) {
-      pendingAdCallback.current = null;
-      callback();
-    }
+    pendingAdCallback.current = null;
+    callback?.();
   }, []);
 
   useEffect(() => {
@@ -73,9 +63,7 @@ const App = () => {
     mobileAds()
       .initialize()
       .then(() => interstitial.load())
-      .catch(error => {
-        console.log('AdMob initialization error:', error);
-      });
+      .catch(error => console.log('AdMob initialization error:', error));
 
     return () => {
       unsubscribeLoaded();
@@ -108,7 +96,6 @@ const App = () => {
     switch (activeTab) {
       case 'Torch':
         return <TorchScreen sound={sound} haptics={haptics} />;
-
       case 'Settings':
         return (
           <SettingsScreen
@@ -118,10 +105,8 @@ const App = () => {
             onHapticsChange={setHaptics}
           />
         );
-
       case 'About':
         return <AboutScreen />;
-
       default:
         return <TorchScreen sound={sound} haptics={haptics} />;
     }
@@ -139,9 +124,7 @@ const App = () => {
       ) : (
         <>
           <AppHeader title={activeTab} />
-
           <View style={styles.content}>{renderScreen()}</View>
-
           <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
         </>
       )}
@@ -156,7 +139,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background,
   },
-
   content: {
     flex: 1,
     paddingHorizontal: 20,

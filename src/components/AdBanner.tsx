@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-
+import { StyleSheet, Text, View } from 'react-native';
 import mobileAds, {
   BannerAd,
   BannerAdSize,
@@ -10,7 +9,7 @@ import { COLORS } from '../theme';
 
 const BANNER_AD_UNIT_ID = 'ca-app-pub-2192277706609111/8857560924';
 
-const AdBanner = () => {
+const AdBanner: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
