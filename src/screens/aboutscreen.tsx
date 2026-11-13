@@ -4,6 +4,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Flashlight, Sparkles } from 'lucide-react-native';
 
 import { COLORS } from '../theme';
+import PrivacyPolicyLink from '../components/PrivacyPolicyLink';
 
 const AboutScreen = () => {
   return (
@@ -59,6 +60,7 @@ const AboutScreen = () => {
         <Text style={styles.version}>Version 1.0.0</Text>
 
         <View style={styles.divider} />
+        <PrivacyPolicyLink />
 
         <Text style={styles.copyright}>
           Made with care. Built for everyday use.

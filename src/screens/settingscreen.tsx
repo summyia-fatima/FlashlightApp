@@ -8,6 +8,7 @@ import {
   Pressable,
   Share,
   Alert,
+  Linking,
 } from 'react-native';
 
 import {
@@ -19,7 +20,7 @@ import {
 } from 'lucide-react-native';
 
 import { COLORS } from '../theme';
-
+import { Shield } from 'lucide-react-native';
 type Props = {
   sound: boolean;
   haptics: boolean;
@@ -160,6 +161,27 @@ const SettingsScreen = ({
               <Text style={styles.description}>
                 Let your friends discover LUMEN
               </Text>
+            </View>
+
+            <ChevronRight size={20} color={COLORS.mutedDark} />
+          </Pressable>
+
+          {/* Privacy Policy */}
+          <Pressable
+            style={styles.actionRow}
+            onPress={() =>
+              Linking.openURL(
+                'https://sites.google.com/view/flashlight-privacy-policy98/home',
+              )
+            }
+          >
+            <View style={styles.iconBox}>
+              <Shield size={22} color={COLORS.yellow} />
+            </View>
+
+            <View style={styles.textBox}>
+              <Text style={styles.title}>Privacy Policy</Text>
+              <Text style={styles.description}>Read our privacy policy</Text>
             </View>
 
             <ChevronRight size={20} color={COLORS.mutedDark} />

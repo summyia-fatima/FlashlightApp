@@ -9,6 +9,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from 'react-native';
+import PrivacyPolicyLink from '../components/PrivacyPolicyLink';
 
 import {
   Power,
@@ -158,6 +159,7 @@ const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
                   </View>
 
                   <Text style={styles.featureText}>{feature.text}</Text>
+              
                 </View>
               );
             })}
@@ -223,6 +225,7 @@ const OnboardingScreen: React.FC<Props> = ({ onFinish, showAdBeforeThird }) => {
               ? 'Your light, your way.'
               : 'Swipe to explore LUMEN'}
           </Text>
+          <PrivacyPolicyLink />
         </View>
       </View>
     </View>
